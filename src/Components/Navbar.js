@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export default function Navbar(props) {
   const [mystyle1,setmystyle1]=useState({
-    backgroundColor:'rgb(39, 35, 35)'
+    backgroundColor:'rgb(39, 35, 35)'  
   });
   const [mystyle2,setmystyle2]=useState({
     color:'rgb(234, 222, 222)'
@@ -100,7 +100,7 @@ export default function Navbar(props) {
   
   
   return (
-    <nav className="navbar navbar-expand-lg" style={mystyle1}>
+    <nav className="navbar navbar-expand-lg sticky-top" style={mystyle1}>
     <div className="container-fluid">
       <Link style={mystyle2} className="navbar-brand" to="/"><b>TextUtils</b></Link>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,14 +126,14 @@ export default function Navbar(props) {
             </ul>
           </li>
           <li className="nav-item">
-            <Link style={mystyle2} className="nav-link disabled" to="/" tabindex="-1" aria-disabled="true">Disabled</Link>
+            <Link style={mystyle2} className="nav-link disabled" to="/" tabIndex="-1" aria-disabled="true">Disabled</Link>
           </li>
         </ul>
         <form className="d-flex">
           <input style={mystyle6} className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
           <button className="btn btn-outline-success" type="submit" style={mystyle3}  onMouseOver={hoverfn} onMouseLeave={hoveroutfn}>Search</button>
         </form>
-        <label class="switch mx-3">
+        <label className="switch mx-3">
         <input type="checkbox" id="chkbox" onClick={mainfn}/>
         <span className="slider round"></span>
         </label>

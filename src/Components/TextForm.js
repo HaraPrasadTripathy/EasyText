@@ -61,14 +61,13 @@ export default function TextForm(props) {
   const onchangefn=(event)=>{
     setText(event.target.value);
   }
-
   
   const [text,setText]=useState("");
   return (
   <>
   <div className="formDiv">
   <h2 style={{color: props.mode==="dark"?"black":"white"}}>{props.heading}</h2>
-  <textarea style={{backgroundColor: props.mode==="dark"?"white":"rgb(77, 72, 72)",color: props.mode==="dark"?"black":"white"} } className='container'  value={text} placeholder={props.placeholder} rows="12" onChange={onchangefn}></textarea>
+  <textarea style={{backgroundColor: props.mode==="dark"?"white":"rgb(77, 72, 72)",color: props.mode==="dark"?"black":"white"} } className='container'  value={text} placeholder={props.placeholder} rows="13" onChange={onchangefn}></textarea>
   <button className='btnClass my-4 mx-1' onClick={UpperCaseEvent}>UpperCase</button>
   <button className='btnClass my-4 mx-2' onClick={LowerCaseEvent}>LowerCase</button>
   <button className='btnClass1 my-4 mx-2' onClick={Extraspc}>RemoveExtraSpaces</button>

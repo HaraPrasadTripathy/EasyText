@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import mwlcm from './mwlcm-removebg-preview.png';
 import wWlcm from './wWlcm-removebg-preview.png';
-import wlcm from './wlcm-removebg-preview.png';
 import '../my-proj1.css';
 
 export default function About(props) {
@@ -102,9 +101,8 @@ export default function About(props) {
             </div>
           </div>
         </div>
-        <img className="img1" src={mwlcm} ait="Man Welcoming You"/>
-         <img className="img2" src={wWlcm} ait="Woman Welcoming You"/>
-        {/* <img src={wlcm} ait="Welcome"/> */}
+        <img className="img1" src={mwlcm} alt="Man Welcoming You"/>
+         <img className="img2" src={wWlcm} alt="Woman Welcoming You"/>
         
       </div>
   );
