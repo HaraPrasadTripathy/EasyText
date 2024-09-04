@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import mwlcm from './mwlcm-removebg-preview.png';
 import wWlcm from './wWlcm-removebg-preview.png';
 import '../my-proj1.css';
