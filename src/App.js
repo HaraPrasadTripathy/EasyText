@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import './App.css';
 import Navbar from './Components/Navbar';
 import TextForm from './Components/TextForm';
 import Alert from './Components/Alert';
@@ -15,11 +14,11 @@ import {
 
 function App(){
 const [mode,setmode]=useState('dark');
-const [bodycolor,setbodycolor]=useState('aqua');
+const [bodycolor,setbodycolor]=useState('#f1fbff');
 const toogleMode=()=>{
  if(mode==='light'){
   setmode('dark');
-  setbodycolor('aqua');
+  setbodycolor('#f1fbff');
   alertfn("Success! Light Mode has been enabled")
  }
  else{
@@ -41,7 +40,7 @@ const alertfn=(message)=>{
   return(
   <>
   <Router>
-  <div className='Parent' style={{backgroundColor:bodycolor,height:"49.3rem"}}>
+  <div className='Parent' style={{backgroundColor:bodycolor,height:"110%"}}>
   <Navbar title="My-NavBar" mode={mode} toogleMode={toogleMode}/>
   <Alert alert={alertmsg}/>
   <div className='container'>

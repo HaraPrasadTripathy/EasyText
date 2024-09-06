@@ -1,10 +1,11 @@
 import React from 'react'
-//write rfc to make a function based component
 
 function Alert(props) {
   return (
-    props.alert && <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{height:"3.5rem"}}>
+    <div style={{height:"1.35rem"}}>
+    {props.alert && <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{height:"3.2rem"}}>
       <p>{props.alert.message}</p>
+    </div>}
     </div>
   )
 }
