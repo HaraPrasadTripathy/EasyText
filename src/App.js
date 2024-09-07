@@ -19,12 +19,10 @@ const toogleMode=()=>{
  if(mode==='light'){
   setmode('dark');
   setbodycolor('#f1fbff');
-  alertfn("Success! Light Mode has been enabled")
  }
  else{
   setmode('light');
   setbodycolor('rgb(50, 47, 47)');
-  alertfn("Success! Dark Mode has been enabled")
  }
 }
 const [alertmsg,setalertmsg]=useState(null);

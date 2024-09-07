@@ -3,26 +3,59 @@
   padding: 0px;
   box-sizing: border-box;
 }
-.btnClass {
-  background-color: rgb(155, 155, 247);
+
+.btnClassLight:disabled:hover {
+  background-color: rgb(160, 160, 232);
+}
+
+.btnClass1Light:disabled:hover {
+  background-color: rgb(160, 160, 232); 
+}
+
+.btnClassDark:disabled:hover {
+  background-color: #1e9bbd; 
+}
+.btnClass1Dark:disabled:hover {
+  background-color: #1e9bbd;
+}
+
+.btnClassLight {
+  background-color: rgb(160, 160, 232);
   color: azure;
-  border-radius: 5px;
+  border-radius: 4px;
   width: 6rem;
   height: 2.26rem;
+  
 }
-.btnClass1 {
-  background-color: rgb(155, 155, 247);
+.btnClass1Light {
+  background-color: rgb(160, 160, 232);
   color: azure;
-  border-radius: 5px;
+  border-radius: 4px;
   width: 9rem;
   height: 2.26rem;
 }
 
+.btnClassLight:hover,.btnClass1Light:hover{
+  background-color: rgb(119, 119, 201);
+}
 
-.btnClass:hover,
-.btnClass1:hover,
-.btnClass2:hover {
-  background-color: rgb(90, 90, 173);
+.btnClassDark {
+  background-color: #1e9bbd; 
+  color: white;  
+  border-radius: 4px;
+  width: 6rem;
+  height: 2.26rem;
+}
+.btnClass1Dark {
+  background-color: #1e9bbd;  
+  color: azure;
+  border-radius: 4px;
+  width: 9rem;
+  height: 2.26rem;
+}
+
+.btnClassDark:hover,.btnClass1Dark:hover{
+  background-color: #21758c; 
 }
 
 .formDiv {
@@ -97,4 +130,29 @@ input:checked + .slider:before {
 
 .contact{
   margin-top: 4.5rem;
+}
+
+
+.dropdown-item {
+  color: rgb(255, 255, 255);
+}
+
+
+.dark-mode .dropdown-item {
+  color: black;
+  background-color: white;
+}
+
+.dark-mode .dropdown-item:hover {
+  background-color: rgb(222, 217, 217);
+}
+
+.light-mode .dropdown-item {
+  color: rgb(220, 217, 217);
+  background-color: rgb(50, 47, 47);
+}
+
+.light-mode .dropdown-item:hover {
+  color: black;
+  background-color: rgb(124, 120, 120);
 }

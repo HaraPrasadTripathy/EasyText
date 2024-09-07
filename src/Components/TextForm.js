@@ -1,42 +1,44 @@
 import React, { useState } from "react";
-import { jsPDF } from "jspdf"; 
+import { jsPDF } from "jspdf";
 import "../my-proj1.css";
 import "./Navbar";
 
 export default function TextForm(props) {
   const [text, setText] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false); // For showing format options
-  const [isSpeaking, setIsSpeaking] = useState(false); // Track speaking state
+  const [showDropdown, setShowDropdown] = useState(false); 
+  const [isSpeaking, setIsSpeaking] = useState(false); 
   const [utterance, setUtterance] = useState(null); // Track the SpeechSynthesisUtterance instance
 
+  const isTextPresent = text.trim().length > 0;
+
   const UpperCaseEvent = () => {
-    let newText = text.toUpperCase();
-    setText(newText);
-    props.alertfn("Success! Text has been converted to Upper Case");
-    if (newText === "")
-      props.alertfn("TextField is Empty, enter some text first");
+    if (text === text.toUpperCase()) {
+      props.alertfn("Text is already in Upper Case");
+    } else {
+      let newText = text.toUpperCase();
+      setText(newText);
+      props.alertfn("Success! Text has been converted to Upper Case");
+    }
   };
 
   const LowerCaseEvent = () => {
-    let newText = text.toLowerCase();
-    setText(newText);
-    props.alertfn("Success! Text has been converted to Lower Case");
-    if (newText === "")
-      props.alertfn("TextField is Empty, enter some text first");
+    if (text === text.toLowerCase()) {
+      props.alertfn("Text is already in Lower Case");
+    } else {
+      let newText = text.toLowerCase();
+      setText(newText);
+      props.alertfn("Success! Text has been converted to Lower Case");
+    }
   };
 
   const Extraspc = () => {
-    let newText = text.split(/[ ]+/);
-    setText(newText.join(" "));
-    props.alertfn("Success! Extra Spaces have been removed");
-    if (text === "") props.alertfn("TextField is Empty, enter some text first");
-  };
-
-  const clearFn = () => {
-    let newText = "";
-    setText(newText);
-    props.alertfn("Success! Text has been cleared");
-    if (text === "") props.alertfn("TextField is already empty");
+    let newText = text.split(/[ ]+/).join(" ");
+    if (text === newText) {
+      props.alertfn("Text already has no extra spaces");
+    } else {
+      setText(newText);
+      props.alertfn("Success! Extra Spaces have been removed");
+    }
   };
 
   const capitalizeAfterSpace = () => {
@@ -44,17 +46,22 @@ export default function TextForm(props) {
       .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
+    if (text === newText) {
+      props.alertfn("Text is already capitalized");
+    } else {
+      setText(newText);
+      props.alertfn("Text has been capitalized!");
+    }
+  };
+
+  const clearFn = () => {
+    let newText = "";
     setText(newText);
-    props.alertfn("Text has been capitalized!");
-    if (newText === "")
-      props.alertfn("TextField is Empty, enter some text first");
+    props.alertfn("Success! Text has been cleared");
+
   };
 
   const CopyToClipboard = async () => {
-    if (!text) {
-      props.alertfn("TextField is empty, nothing to copy");
-      return;
-    }
     try {
       await navigator.clipboard.writeText(text);
       props.alertfn("Text has been copied to clipboard");
@@ -65,40 +72,29 @@ export default function TextForm(props) {
   };
 
   const speakText = () => {
-    console.log(utterance)
-    if (!text) {
-      props.alertfn("TextField is empty, nothing to speak");
-      return;
-    }
-  
+    console.log(utterance);
     if (isSpeaking) {
       window.speechSynthesis.cancel(); // Stop speaking
       setIsSpeaking(false);
     } else {
       const newUtterance = new SpeechSynthesisUtterance(text);
-  
+
       // Event listener for when speech ends
       newUtterance.onend = () => {
         setIsSpeaking(false);
       };
-  
+
       setUtterance(newUtterance);
       window.speechSynthesis.speak(newUtterance);
       setIsSpeaking(true);
     }
   };
-  
 
   const printText = () => {
     window.print();
   };
 
   const handleDownload = (format) => {
-    if (text === "") {
-      props.alertfn("Please enter some text first", "danger");
-      return;
-    }
-
     if (format === "txt") {
       const element = document.createElement("a");
       const file = new Blob([text], { type: "text/plain" });
@@ -142,46 +138,99 @@ export default function TextForm(props) {
           className="container"
           value={text}
           placeholder={props.placeholder}
-          rows="11"
+          rows="10"
           onChange={onchangefn}
         ></textarea>
 
-        <button className="btnClass my-4 mx-1" onClick={UpperCaseEvent}>
+        <button
+          className={`my-4 mx-1 ${
+            props.mode === "dark" ? "btnClassLight" : "btnClassDark"
+          }`}
+          onClick={UpperCaseEvent}
+          disabled={!isTextPresent}
+        >
           UpperCase
         </button>
-        <button className="btnClass my-4 mx-2" onClick={LowerCaseEvent}>
+        <button
+          className={`my-4 mx-1 ${
+            props.mode === "dark" ? "btnClassLight" : "btnClassDark"
+          }`}
+          onClick={LowerCaseEvent}
+          disabled={!isTextPresent}
+        >
           LowerCase
         </button>
-        <button className="btnClass my-4 mx-2" onClick={capitalizeAfterSpace}>
+        <button
+          className={`my-4 mx-1 ${
+            props.mode === "dark" ? "btnClassLight" : "btnClassDark"
+          }`}
+          onClick={capitalizeAfterSpace}
+          disabled={!isTextPresent}
+        >
           Capitalize
         </button>
-        <button className="btnClass1 my-4 mx-2" onClick={Extraspc}>
+        <button
+          className={`my-4 mx-1 ${
+            props.mode === "dark" ? "btnClass1Light" : "btnClass1Dark"
+          }`}
+          onClick={Extraspc}
+          disabled={!isTextPresent}
+        >
           Remove Spaces
         </button>
-        <button className="btnClass my-4 mx-2" onClick={CopyToClipboard}>
+        <button
+          className={`my-4 mx-1 ${
+            props.mode === "dark" ? "btnClassLight" : "btnClassDark"
+          }`}
+          onClick={CopyToClipboard}
+          disabled={!isTextPresent}
+        >
           Copy
         </button>
-        <button className="btnClass my-4 mx-2" onClick={clearFn}>
+        <button
+          className={`my-4 mx-1 ${
+            props.mode === "dark" ? "btnClassLight" : "btnClassDark"
+          }`}
+          onClick={clearFn}
+          disabled={!isTextPresent}
+        >
           Clear
         </button>
-        <button className="btnClass my-4 mx-2" onClick={speakText}>
-           <i className={`fas fa-volume-${isSpeaking ? 'mute' : 'up'}`}></i>  
+        <button
+          className={`my-4 mx-1 ${
+            props.mode === "dark" ? "btnClassLight" : "btnClassDark"
+          }`}
+          onClick={speakText}
+          disabled={!isTextPresent}
+        >
+          <i className={`fas fa-volume-${isSpeaking ? "mute" : "up"}`}></i>
         </button>
-        <button className="btnClass my-4 mx-2" onClick={printText}>
+        <button
+          className={`my-4 mx-1 ${
+            props.mode === "dark" ? "btnClassLight" : "btnClassDark"
+          }`}
+          onClick={printText}
+          disabled={!isTextPresent}
+        >
           <i className="fas fa-print"></i> Print
         </button>
 
-        {/* Download button */}
         <button
-          className="btnClass my-4 mx-2"
+          className={`my-4 mx-1 ${
+            props.mode === "dark" ? "btnClassLight" : "btnClassDark"
+          }`}
           onClick={() => setShowDropdown(!showDropdown)}
+          disabled={!isTextPresent}
         >
           Download
         </button>
 
-        {/* Dropdown for selecting format */}
         {showDropdown && (
-          <div className="dropdown mt-2">
+          <div
+            className={`dropdown mt-1 ${
+              props.mode === "dark" ? "dark-mode" : "light-mode"
+            }`}
+          >
             <button
               className="dropdown-item"
               onClick={() => handleDownload("txt")}
@@ -204,7 +253,7 @@ export default function TextForm(props) {
         )}
       </div>
 
-      <div className="container">
+      <div className="container  my-2">
         <h2 style={{ color: props.mode === "dark" ? "black" : "white" }}>
           Your text Summary
         </h2>

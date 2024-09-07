@@ -40,7 +40,8 @@ export default function About(props) {
           </h2>
           <div
             style={{
-              backgroundColor: props.mode === "dark" ? "white" : "rgb(3,3,24)",
+              backgroundColor:
+                props.mode === "dark" ? "white" : "rgba(44, 41, 41)",
               color: props.mode === "dark" ? "black" : "white",
             }}
             id="collapseOne"
@@ -48,7 +49,7 @@ export default function About(props) {
             data-bs-parent="#accordionExample"
           >
             <div className="accordion-body">
-              TextUtils is a versatile text editor designed to simplify text
+              EasyText is a versatile text editor designed to simplify text
               manipulation tasks. Whether you're editing plain text, formatting
               content, or analyzing word counts, TextUtils provides an intuitive
               interface for all your text processing needs. With a focus on
@@ -91,11 +92,12 @@ export default function About(props) {
             <div
               className="accordion-body"
               style={{
-                backgroundColor: props.mode === "dark" ? "white" : "rgb(1,1,1)",
+                backgroundColor:
+                  props.mode === "dark" ? "white" : "rgba(44, 41, 41)",
                 color: props.mode === "dark" ? "black" : "white",
               }}
             >
-              TextUtils is built on the principle of simplicity and efficiency.
+              EasyText is built on the principle of simplicity and efficiency.
               The goal is to provide a powerful yet easy-to-use text editing
               tool that anyone can rely on for everyday tasks. With a
               streamlined design and a focus on functionality, TextUtils ensures
@@ -137,11 +139,12 @@ export default function About(props) {
             <div
               className="accordion-body"
               style={{
-                backgroundColor: props.mode === "dark" ? "white" : "rgb(1,1,1)",
+                backgroundColor:
+                  props.mode === "dark" ? "white" : "rgba(44, 41, 41)",
                 color: props.mode === "dark" ? "black" : "white",
               }}
             >
-              At TextUtils, our mission is to deliver a simple yet powerful text
+              At EasyText, our mission is to deliver a simple yet powerful text
               editing solution that meets the diverse needs of our users. We
               strive to create a platform that is accessible, efficient, and
               capable of handling everything from basic edits to advanced text
@@ -154,14 +157,40 @@ export default function About(props) {
         </div>
       </div>
 
-      <div className="contact" style={{ color: props.mode === "dark" ? "black" : "white"}}>
-        <h1 className="my-3">Contact Us</h1> 
-        <strong>Email:</strong> support@textutils.com <br></br>
-        <strong>Phone:</strong> +1-234-567-8900 <br></br>
-        <strong>Address:</strong> 123 TextUtils Lane, Coding City, CodeWorld 56789  <br></br>
-        <h5>Follow Us:</h5>
-        Twitter: <a href="https://twitter.com/textutilsapp" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit" }}>@TextUtilsApp</a> <br></br>
-        Facebook: <a href="https://twitter.com/textutilsapp" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit" }}>facebook.com/TextUtils</a>
+      <div
+        className="contact"
+        style={{ color: props.mode === "dark" ? "black" : "white" }}
+      >
+        <h1 className="my-3">Contact Us</h1>
+        <p className="mx-1" style={{ display: "inline",fontWeight: "500" }}>Email:</p> support@EasyText.com <br></br>
+        <p className="mx-1" style={{ display: "inline",fontWeight: "500" }}>Phone:</p> +1-234-567-8900 <br></br>
+        <p className="mx-1" style={{ display: "inline",fontWeight: "500" }}>Address:</p> 123 EasyText Lane, Coding
+        City, CodeWorld 56789 <br></br>
+        <h5 className="mx-1" style={{fontWeight: "600" }}>Follow Us:</h5>
+        <p className="mx-1" style={{ display: "inline",fontWeight: "500" }}>
+          Twitter:
+        </p>
+        <a
+          href="https://twitter.com/EasyTextapp"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          @EasyTextApp
+        </a>{" "}
+        <br></br>
+        <p className="mx-1" style={{ display: "inline",fontWeight: "500" }}>
+          Facebook:
+        </p>
+        <a
+          href="https://twitter.com/EasyTextsapp"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mx-1"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          facebook.com/EasyText
+        </a>
       </div>
     </div>
   );

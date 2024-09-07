@@ -20,14 +20,14 @@ export default function Navbar(props) {
   const toggledark = () => {
     if (props.mode === "dark") {
       setmystyle1({
-        backgroundColor: "rgb(120,120,104)", // Set to the specific blue color
+        backgroundColor: "rgb(120,120,104)", 
       });
       setmystyle2({
         color: "white",
       });
     } else {
       setmystyle1({
-        backgroundColor: "rgb(39, 35, 30)", // Default light mode color
+        backgroundColor: "rgb(39, 35, 30)", 
       });
       setmystyle2({
         color: "rgb(234, 222, 222)",
