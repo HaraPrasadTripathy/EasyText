@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import "../my-proj1.css";
 import "./Navbar";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function TextForm(props) {
   const [text, setText] = useState("");
@@ -102,10 +104,12 @@ export default function TextForm(props) {
       element.download = "myText.txt";
       document.body.appendChild(element); // Required for this to work in FireFox
       element.click();
+      toast.success("Download Started");
     } else if (format === "pdf") {
       const doc = new jsPDF();
       doc.text(text, 10, 10);
       doc.save("myText.pdf");
+      toast.success("Download Started");
     } else if (format === "doc") {
       const element = document.createElement("a");
       const file = new Blob([text], { type: "application/msword" });
@@ -113,10 +117,11 @@ export default function TextForm(props) {
       element.download = "myText.doc";
       document.body.appendChild(element);
       element.click();
+      toast.success("Download Started");
     }
 
     setShowDropdown(false); // Close the dropdown after download
-    props.alertfn(`${format.toUpperCase()} File Downloaded`, "success");
+    // props.alertfn(`${format.toUpperCase()} File Downloaded`, "success");
   };
 
   const onchangefn = (event) => {
@@ -262,6 +267,11 @@ export default function TextForm(props) {
           words and {text.length} characters
         </p>
       </div>
+      <ToastContainer 
+      position="bottom-right"
+      autoClose={1200}
+      theme="colored"
+      />
     </>
   );
 }
