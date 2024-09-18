@@ -1,17 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import "../my-proj1.css";
 import "./Navbar";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { franc } from "franc-min";
+import axios from "axios";
+import { langMap, langMap1, languageOptions, languageOptions1 } from "../languageMappings";
+
+
+const getTextLanguageCode = (text) => {
+  const langCode = franc(text);
+  return langMap[langCode] || "en-US"; // Default to English if not found
+};
+
+// Function to translate text
+const translateText = async (text, targetLang) => {
+  const srcLang = langMap1[franc(text)]
+  console.log(franc(text));
+  const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
+    text
+  )}&langpair=${srcLang}|${targetLang}`;
+  try {
+    const response = await axios.get(url);
+    toast.success(`Successfully translated`);
+    return response.data.responseData.translatedText;
+  } catch (error) {
+    toast.error(error);
+    console.error("Translation error:", error);
+    return text;
+  }
+};
 
 export default function TextForm(props) {
   const [text, setText] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false); 
-  const [isSpeaking, setIsSpeaking] = useState(false); 
-  const [utterance, setUtterance] = useState(null); // Track the SpeechSynthesisUtterance instance
+  const [voices, setVoices] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [language, setLanguage] = useState("en-US");
+  const [targetLang, setTargetLang] = useState("en-US"); // Default target language for translation
 
   const isTextPresent = text.trim().length > 0;
+
+  useEffect(() => {
+    const fetchVoices = () => {
+      const synth = window.speechSynthesis;
+      const voices = synth.getVoices();
+      setVoices(voices);
+
+      // Listen for voice changes
+      synth.onvoiceschanged = () => {
+        setVoices(synth.getVoices());
+      };
+    };
+
+    fetchVoices();
+  }, []);
+
+  const checkVoiceAvailability = (languageCode) => {
+    return voices.some((voice) => voice.lang === languageCode);
+  };
 
   const UpperCaseEvent = () => {
     if (text === text.toUpperCase()) {
@@ -60,7 +108,6 @@ export default function TextForm(props) {
     let newText = "";
     setText(newText);
     props.alertfn("Success! Text has been cleared");
-
   };
 
   const CopyToClipboard = async () => {
@@ -74,22 +121,51 @@ export default function TextForm(props) {
   };
 
   const speakText = () => {
-    console.log(utterance);
+    const textLangCode = getTextLanguageCode(text);
+
+    if (!text.trim()) {
+      toast.error("Text is empty!");
+      return;
+    }
+
+    // Check if the text language is English and if so, bypass the compatibility check
+    const isTextEnglish = textLangCode === "en-US" || textLangCode === "en-GB";
+
+    // If the text is English, skip the compatibility check
+    if (!isTextEnglish && textLangCode !== language) {
+      toast.error(
+        "The selected language does not match the language of the text."
+      );
+      return;
+    }
+
+    if (!checkVoiceAvailability(language)) {
+      toast.error("Selected language voice not available!");
+      return;
+    }
+
     if (isSpeaking) {
-      window.speechSynthesis.cancel(); // Stop speaking
+      window.speechSynthesis.cancel();
       setIsSpeaking(false);
     } else {
-      const newUtterance = new SpeechSynthesisUtterance(text);
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = language;
 
-      // Event listener for when speech ends
-      newUtterance.onend = () => {
+      utterance.onend = () => {
         setIsSpeaking(false);
       };
 
-      setUtterance(newUtterance);
-      window.speechSynthesis.speak(newUtterance);
+      window.speechSynthesis.speak(utterance);
       setIsSpeaking(true);
     }
+  };
+
+  const handleLanguageChange = (e) => {
+    setLanguage(e.target.value);
+  };
+
+  const onchangefn = (event) => {
+    setText(event.target.value);
   };
 
   const printText = () => {
@@ -124,8 +200,13 @@ export default function TextForm(props) {
     // props.alertfn(`${format.toUpperCase()} File Downloaded`, "success");
   };
 
-  const onchangefn = (event) => {
-    setText(event.target.value);
+  const handleTargetLanguageChange = (e) => {
+    setTargetLang(e.target.value);
+  };
+
+  const handleTranslate = async () => {
+    const result = await translateText(text, targetLang);
+    setText(result); // Update text area with translated text
   };
 
   return (
@@ -230,6 +311,18 @@ export default function TextForm(props) {
           Download
         </button>
 
+        <select
+          id="language-select"
+          onChange={handleLanguageChange}
+          className="my-4 mx-1"
+        >
+          {languageOptions.map((lang) => (
+            <option key={lang.value} value={lang.value}>
+              {lang.label}
+            </option>
+          ))}
+        </select>
+
         {showDropdown && (
           <div
             className={`dropdown mt-1 ${
@@ -258,6 +351,22 @@ export default function TextForm(props) {
         )}
       </div>
 
+        <select value={targetLang} onChange={handleTargetLanguageChange}>
+          {languageOptions1.map((options)=>(
+            <option key={options.code} value={options.code}> {options.label} </option>
+          ))}
+        </select>
+
+      <button
+        className={`my-4 mx-1 ${
+          props.mode === "dark" ? "btnClassLight" : "btnClassDark"
+        }`}
+        onClick={handleTranslate}
+        disabled={!isTextPresent}
+      >
+        Translate
+      </button>
+
       <div className="container  my-2">
         <h2 style={{ color: props.mode === "dark" ? "black" : "white" }}>
           Your text Summary
@@ -267,10 +376,10 @@ export default function TextForm(props) {
           words and {text.length} characters
         </p>
       </div>
-      <ToastContainer 
-      position="bottom-right"
-      autoClose={1200}
-      theme="colored"
+      <ToastContainer
+        position="bottom-right"
+        autoClose={1500}
+        theme="colored"
       />
     </>
   );
