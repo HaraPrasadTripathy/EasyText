@@ -300,28 +300,7 @@ import axios from "axios";
 import { langMap, langMap1, languageOptions, languageOptions1 } from "../languageMappings";
 
 
-const getTextLanguageCode = (text) => {
-  const langCode = franc(text);
-  return langMap[langCode] || "en-US"; // Default to English if not found
-};
 
-// Function to translate text
-const translateText = async (text, targetLang) => {
-  const srcLang = langMap1[franc(text)]
-  console.log(franc(text));
-  const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
-    text
-  )}&langpair=${srcLang}|${targetLang}`;
-  try {
-    const response = await axios.get(url);
-    toast.success(`Successfully translated`);
-    return response.data.responseData.translatedText;
-  } catch (error) {
-    toast.error(error);
-    console.error("Translation error:", error);
-    return text;
-  }
-};
 
 export default function TextForm(props) {
   const [text, setText] = useState("");
@@ -333,7 +312,7 @@ export default function TextForm(props) {
 
   const isTextPresent = text.trim().length > 0;
 
-   // Load text from local storage on mount
+   // Loading text from local storage on mount
    useEffect(() => {
     const storedText = localStorage.getItem("text");
     if (storedText) {
@@ -341,7 +320,7 @@ export default function TextForm(props) {
     }
   }, []);
 
-  // Save text to local storage whenever it changes
+  // Saving text to local storage whenever it changes
   useEffect(() => {
     localStorage.setItem("text", text);
   }, [text]);
@@ -360,6 +339,32 @@ export default function TextForm(props) {
 
     fetchVoices();
   }, []);
+
+  const getTextLanguageCode = (text) => {
+    const langCode = franc(text);
+    return langMap[langCode] || "en-US"; // Default to English if not found
+  };
+  
+  // Function to translate text
+  const translateText = async (text, targetLang) => {
+    let srcLang = langMap1[franc(text)] 
+    if(srcLang === undefined){
+      srcLang = "en";
+    }
+    console.log(franc(text));
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
+      text
+    )}&langpair=${srcLang}|${targetLang}`;
+    try {
+      const response = await axios.get(url);
+      toast.success(`Successfully translated`);
+      return response.data.responseData.translatedText;
+    } catch (error) {
+      toast.error(error);
+      console.error("Translation error:", error);
+      return text;
+    }
+  };
 
   const checkVoiceAvailability = (languageCode) => {
     return voices.some((voice) => voice.lang === languageCode);
@@ -426,7 +431,7 @@ export default function TextForm(props) {
 
   const speakText = () => {
     const textLangCode = getTextLanguageCode(text);
-
+   
     if (!text.trim()) {
       toast.error("Text is empty!");
       return;
@@ -586,15 +591,7 @@ export default function TextForm(props) {
         >
           Clear
         </button>
-        <button
-          className={`my-4 mx-1 ${
-            props.mode === "dark" ? "btnClassLight" : "btnClassDark"
-          }`}
-          onClick={speakText}
-          disabled={!isTextPresent}
-        >
-          <i className={`fas fa-volume-${isSpeaking ? "mute" : "up"}`}></i>
-        </button>
+        
         <button
           className={`my-4 mx-1 ${
             props.mode === "dark" ? "btnClassLight" : "btnClassDark"
@@ -613,6 +610,16 @@ export default function TextForm(props) {
           disabled={!isTextPresent}
         >
           Download
+        </button>
+
+        <button
+          className={`my-4 mx-1 ${
+            props.mode === "dark" ? "btnClassLight" : "btnClassDark"
+          }`}
+          onClick={speakText}
+          disabled={!isTextPresent}
+        >
+          <i className={`fas fa-volume-${isSpeaking ? "mute" : "up"}`}></i>
         </button>
 
         <select
@@ -684,6 +691,7 @@ export default function TextForm(props) {
         position="bottom-right"
         autoClose={1500}
         theme="colored"
+        newestOnTop={true}
       />
     </>
   );
