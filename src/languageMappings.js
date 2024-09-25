@@ -48,6 +48,61 @@ export const langMap = {
 
 
 
+// export const langMap = {
+//   hin: "hi-IN", // Hindi
+//   tam: "ta-IN", // Tamil
+//   ben: "bn-IN", // Bengali
+//   guj: "gu-IN", // Gujarati
+//   mar: "mr-IN", // Marathi
+//   mal: "ml-IN", // Malayalam
+//   pan: "pa-IN", // Punjabi
+//   kan: "kn-IN", // Kannada
+//   ori: "or-IN", // Odia
+//   eng: "en-US", // English (US)
+//   fra: "fr-FR", // French (France)
+//   spa: "es-ES", // Spanish (Spain)
+//   deu: "de-DE", // German (Germany)
+//   ita: "it-IT", // Italian
+//   por: "pt-PT", // Portuguese (Portugal)
+//   zho: "zh-CN", // Chinese (Mandarin)
+//   jpn: "ja-JP", // Japanese
+//   kor: "ko-KR", // Korean
+//   rus: "ru-RU", // Russian
+//   ara: "ar-SA", // Arabic
+//   tur: "tr-TR", // Turkish
+//   nld: "nl-NL", // Dutch
+// };
+
+
+// export const langMap1 = {
+//   hin: "hi", // Hindi
+//   tam: "ta", // Tamil
+//   ben: "bn", // Bengali
+//   guj: "gu", // Gujarati
+//   mar: "mr", // Marathi
+//   mal: "ml", // Malayalam
+//   pan: "pa", // Punjabi
+//   kan: "kn", // Kannada
+//   ori: "or", // Odia
+//   eng: "en", // English (US)
+//   enm: "en", // English (UK)
+//   fra: "fr", // French (France)
+//   spa: "es", // Spanish (Spain)
+//   deu: "de", // German (Germany)
+//   ita: "it", // Italian
+//   por: "pt", // Portuguese (Portugal)
+//   zho: "zh", // Chinese (Mandarin)
+//   jpn: "ja", // Japanese
+//   kor: "ko", // Korean
+//   rus: "ru", // Russian
+//   ara: "ar", // Arabic
+//   tur: "tr", // Turkish
+//   nld: "nl", // Dutch
+// };
+
+
+
+
 export const langMap1 = {
   hin: "hi",  // Hindi
   tam: "ta",  // Tamil
@@ -195,4 +250,3 @@ export const languageOptions1 = [
   { code: "fi", label: "Finnish (Finland)" },    
   { code: "hu", label: "Hungarian (Hungary)" },  
 ];
-
